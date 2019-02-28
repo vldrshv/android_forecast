@@ -1,16 +1,58 @@
 package com.example.vldrshv.forecast
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.Handler
+import android.util.Log
+import android.view.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.BounceInterpolator
 import androidx.fragment.app.Fragment
+import bg.devlabs.transitioner.Transitioner
+import kotlinx.android.synthetic.main.current_locations_fragment.*
+import java.io.IOException
 
 
 class CurrentLocationsF : Fragment() {
     
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.current_locations_fragment, container, false)
-    }
+    private val CLASS_TAG: String = "CurrentLocationsF"
     
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        
+        val rootView: View? = inflater?.inflate(R.layout.current_locations_fragment, container, false)
+    
+        delay(100) {
+            val transition = Transitioner(starting_view, ending_view)
+            transition.duration = 5
+            transition.interpolator = AccelerateDecelerateInterpolator()
+            button.setOnClickListener {
+                transition.animateTo(percent = 0f, duration = 2000, interpolator = BounceInterpolator())
+            }
+            
+//            val size = Point()
+//            activity!!.windowManager.defaultDisplay.getSize(size)
+            screen.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_MOVE -> {
+                        transition.animateTo(percent = 1f, duration = 2000, interpolator = BounceInterpolator())
+                        true
+                    }
+                    else -> {
+                        true
+                    }
+                }
+            }
+            
+        }
+    
+        return rootView
+    }
+}
+
+fun delay(delay: Long, func: () -> Unit) {
+    Handler().postDelayed({
+        try {
+            func()
+        } catch (e: Exception) {
+        }
+    }, delay)
 }

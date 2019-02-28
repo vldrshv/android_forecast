@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
     
     lateinit var bottomNavigationView: BottomNavigationView
     
+    private var lat: Float = 0f
+    private var lng: Float = 0f
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,8 +55,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
             checkLocationPermission()
             getLocation()
         }
-        
-        
     }
     
     private val mBottomNavViewListener =
@@ -81,6 +82,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
      * ========================================================================================
      */
     
+    private fun isGPSUpdated() : Boolean = lat != 0f && lng != 0f
+    
     private fun checkLocationPermission() {
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         Log.i(CLASS_TAG, rc.toString() + "")
@@ -95,7 +98,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private fun getLocation() {
         Log.i(CLASS_TAG, "HANDLE")
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        if (rc == PackageManager.PERMISSION_GRANTED) {
+        if (rc == PackageManager.PERMISSION_GRANTED && isGPSUpdated()) {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
             
             locationManager!!.requestLocationUpdates(
@@ -129,10 +132,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
     
     override fun onLocationChanged(location: Location) {
-        val lat = location.latitude.toFloat()
-        val longt = location.longitude.toFloat()
+        lat = location.latitude.toFloat()
+        lng = location.longitude.toFloat()
         
-        Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$longt")
+        Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
     }
     
     override fun onProviderDisabled(provider: String) {
