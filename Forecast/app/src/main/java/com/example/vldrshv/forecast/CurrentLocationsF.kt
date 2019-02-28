@@ -2,14 +2,12 @@ package com.example.vldrshv.forecast
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.BounceInterpolator
 import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
 import kotlinx.android.synthetic.main.current_locations_fragment.*
-import java.io.IOException
 
 
 class CurrentLocationsF : Fragment() {
@@ -25,7 +23,7 @@ class CurrentLocationsF : Fragment() {
             transition.duration = 5
             transition.interpolator = AccelerateDecelerateInterpolator()
             button.setOnClickListener {
-                transition.animateTo(percent = 0f, duration = 2000, interpolator = BounceInterpolator())
+                transition.animateTo(percent = 0f, duration = 2000)//, interpolator = BounceInterpolator())
             }
             
 //            val size = Point()
