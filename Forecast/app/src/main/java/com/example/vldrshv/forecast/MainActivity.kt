@@ -3,24 +3,20 @@ package com.example.vldrshv.forecast
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
-import android.support.v7.app.AppCompatActivity
+//import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+//import android.support.design.widget.BottomNavigationView
+//import androidx.core.app.Fragment
 import android.location.LocationManager
 import android.util.Log
-import android.location.Criteria
 import android.content.pm.PackageManager
 import android.location.LocationListener
-import android.support.v4.app.ActivityCompat
-import android.os.Build
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
 
 import android.Manifest
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
-import android.widget.TextView
-import android.support.design.widget.Snackbar
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 // TODO:  вставить 3 фрагмента

@@ -8,15 +8,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/cardBackgroundColor">
+            android:background="@color/cardBackgroundColor"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <com.google.android.material.card.MaterialCardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
@@ -26,8 +27,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/cardBackgroundColor">
+                    android:background="@color/cardBackgroundColor"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:padding="16dp"
-                            app:srcCompat="@drawable/icons8_sun_200c"/>
+                            app:srcCompat="@drawable/icons8_sun_200c" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -284,7 +285,7 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
@@ -295,5 +296,14 @@
         android:text="Pressure"
         android:textColor="@color/colorMenuNotSelected"
         android:textSize="10sp" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="aaaa">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
