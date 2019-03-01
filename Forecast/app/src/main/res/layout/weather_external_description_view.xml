@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@color/cardBackgroundColor"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -35,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardBackgroundColor"
             android:orientation="vertical">
 
             <TextView
@@ -43,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="13 km/h"
                 android:textColor="@color/colorMenuSelected"
                 android:textStyle="bold" />
@@ -53,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="South"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
@@ -70,7 +68,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardBackgroundColor"
             android:orientation="vertical">
 
             <TextView
@@ -78,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="90%"
                 android:textColor="@color/colorMenuSelected"
                 android:textStyle="bold" />
@@ -88,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="0.02 cm"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
@@ -105,7 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardBackgroundColor"
             android:orientation="vertical">
 
             <TextView
@@ -113,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="8:32"
                 android:textColor="@color/colorMenuSelected"
                 android:textStyle="bold" />
@@ -123,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="Sunrise"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
@@ -156,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="6°"
                 android:textColor="@color/colorMenuSelected"
                 android:textSize="14sp"
@@ -167,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="Feels like"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
@@ -191,7 +187,7 @@
                 android:id="@+id/tvPressure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="780 bar"
                 android:textColor="@color/colorMenuSelected"
                 android:textStyle="bold" />
@@ -200,7 +196,7 @@
                 android:id="@+id/textView15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="Pressure"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
@@ -224,7 +220,7 @@
                 android:id="@+id/tvSunSet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="21:15"
                 android:textColor="@color/colorMenuSelected"
                 android:textStyle="bold" />
@@ -233,12 +229,20 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="@font/playfair_display"
                 android:text="Sunset"
                 android:textColor="@color/colorMenuNotSelected"
                 android:textSize="10sp" />
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorDivider"
+        android:tag="divider1" />
 </LinearLayout>
 
