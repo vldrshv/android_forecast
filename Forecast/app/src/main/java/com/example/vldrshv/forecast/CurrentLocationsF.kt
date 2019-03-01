@@ -26,12 +26,10 @@ class CurrentLocationsF : Fragment() {
                 transition.animateTo(percent = 0f, duration = 2000)//, interpolator = BounceInterpolator())
             }
             
-//            val size = Point()
-//            activity!!.windowManager.defaultDisplay.getSize(size)
             screen.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_MOVE -> {
-                        transition.animateTo(percent = 1f, duration = 2000, interpolator = BounceInterpolator())
+                        transition.animateTo(percent = 1f, duration = 1000)
                         true
                     }
                     else -> {

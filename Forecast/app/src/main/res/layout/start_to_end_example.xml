@@ -9,18 +9,13 @@
 
     <LinearLayout
         android:id="@+id/ending_view"
+        android:tag="starting_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:alpha="0.01"
         android:orientation="vertical"
         android:padding="8dp"
-        android:tag="starting_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -58,10 +53,10 @@
         android:id="@+id/starting_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         android:orientation="vertical"
         android:tag="starting_view"
         android:visibility="visible"
-        android:background="@drawable/background"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -89,17 +84,4 @@
             android:textSize="20dp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#fff"
-        android:text="Expand"
-        android:textColor="#210479"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/starting_view" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
