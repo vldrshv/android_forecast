@@ -98,14 +98,16 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private fun getLocation() {
         Log.i(CLASS_TAG, "HANDLE")
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        if (rc == PackageManager.PERMISSION_GRANTED && isGPSUpdated()) {
+        if (rc == PackageManager.PERMISSION_GRANTED ) {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
             
-            locationManager!!.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 0, 0f, this)
-            locationManager!!.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-            
+            if (!isGPSUpdated()) {
+                Log.i(CLASS_TAG, "LOCATION CHECK lat = $lat, lng = $lng")
+                locationManager!!.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+                locationManager!!.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 0, 0f, this)
+            }
         }
     }
     
