@@ -8,4 +8,5 @@
     <color name="colorMenuNotSelected">#757575</color>
     <color name="colorStatusBarText">#757575</color>
     <color name="cardBackgroundColor">#FFFFFFFF</color>
+    <color name="colorDivider">#eeeeee</color>
 </resources>
