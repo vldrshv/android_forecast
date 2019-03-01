@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.BounceInterpolator
 import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
 import kotlinx.android.synthetic.main.current_locations_fragment.*
 
 
+
+
 class CurrentLocationsF : Fragment() {
     
     private val CLASS_TAG: String = "CurrentLocationsF"
-    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         
         val rootView: View? = inflater?.inflate(R.layout.current_locations_fragment, container, false)
@@ -39,9 +39,10 @@ class CurrentLocationsF : Fragment() {
             }
             
         }
-    
+        
         return rootView
     }
+    
 }
 
 fun delay(delay: Long, func: () -> Unit) {
