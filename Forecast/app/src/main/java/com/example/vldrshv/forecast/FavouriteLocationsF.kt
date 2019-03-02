@@ -8,9 +8,14 @@ import androidx.fragment.app.Fragment
 
 
 class FavouriteLocationsF : Fragment() {
+    private val CLASS_TAG = "FavouriteLocationsF"
+    
+    private var rootView: View? = null
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.favourite_locations_fragment, container, false)
+        rootView = inflater?.inflate(R.layout.favourite_locations_fragment, container, false)
+        activity!!.window.statusBarColor = activity!!.getColor(R.color.colorPrimary)
+        return rootView
     }
     
 }

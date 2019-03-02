@@ -31,7 +31,7 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     }
     
     private val BASE_SPEED_DP_PER_S = 200
-    private val COUNT = 32
+    private val COUNT = 50
     private val SEED = 1337
     
     /** The minimum scale of a star */
@@ -65,8 +65,8 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     }
     
     private fun init() {
-        mDrawable = ContextCompat.getDrawable(context, R.drawable.star)
-        mBaseSize = Math.max(mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight) / 2f
+        mDrawable = ContextCompat.getDrawable(context, R.drawable.snow)//R.drawable.star)
+        mBaseSize = Math.max(mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight) / 4f
         mBaseSpeed = BASE_SPEED_DP_PER_S * resources.displayMetrics.density
     }
     
@@ -85,7 +85,7 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
         
         // Set the Y position
         // Start at the bottom of the view
-        star.y = 0f//viewHeight.toFloat()
+        star.y = -viewHeight.toFloat() / 3
         // The Y value is in the center of the star, add the size
         // to make sure it starts outside of the view bound
         star.y += star.scale * mBaseSize
