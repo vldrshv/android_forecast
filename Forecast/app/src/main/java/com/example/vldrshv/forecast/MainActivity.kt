@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -69,10 +70,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
     
     private fun addFragment(fragment: Fragment) {
         if (savedInstanceState == null) {
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.flContext, fragment)
-                    .commit()
+            val transaction = supportFragmentManager.beginTransaction()
+            
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+    
+            transaction.replace(R.id.flContext, fragment).commit()
         }
     }
     

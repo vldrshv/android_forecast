@@ -23,7 +23,7 @@ class CurrentLocationsF : Fragment() {
             transition.duration = 5
             transition.interpolator = AccelerateDecelerateInterpolator()
             button.setOnClickListener {
-                transition.animateTo(percent = 0f, duration = 2000)//, interpolator = BounceInterpolator())
+                transition.animateTo(percent = 0f, duration = 1000)//, interpolator = BounceInterpolator())
             }
             
             screen.setOnTouchListener { v, event ->
