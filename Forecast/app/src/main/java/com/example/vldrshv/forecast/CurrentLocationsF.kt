@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
 import kotlinx.android.synthetic.main.current_locations_fragment.*
 
-
-
-
 class CurrentLocationsF : Fragment() {
     
     private val CLASS_TAG: String = "CurrentLocationsF"
@@ -42,7 +39,6 @@ class CurrentLocationsF : Fragment() {
         
         return rootView
     }
-    
 }
 
 fun delay(delay: Long, func: () -> Unit) {
