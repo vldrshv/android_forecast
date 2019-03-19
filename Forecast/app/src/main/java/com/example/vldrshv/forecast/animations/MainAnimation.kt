@@ -1,4 +1,4 @@
-package com.example.vldrshv.forecast
+package com.example.vldrshv.forecast.animations
 
 import android.os.Handler
 

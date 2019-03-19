@@ -17,6 +17,9 @@ import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.vldrshv.forecast.fragments.CurrentLocationsF
+import com.example.vldrshv.forecast.fragments.FavouriteLocationsF
+import com.example.vldrshv.forecast.fragments.SearchLocationsF
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -137,9 +140,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
     
     override fun onLocationChanged(location: Location) {
-        lat = location.latitude.toFloat()
-        lng = location.longitude.toFloat()
-        
+        if (!isGPSUpdated()) {
+            lat = location.latitude.toFloat()
+            lng = location.longitude.toFloat()
+        }
+
         Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
     }
     

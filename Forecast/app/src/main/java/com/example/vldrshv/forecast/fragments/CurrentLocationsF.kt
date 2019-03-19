@@ -1,12 +1,12 @@
-package com.example.vldrshv.forecast
+package com.example.vldrshv.forecast.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
+import com.example.vldrshv.forecast.animations.MainAnimation
+import com.example.vldrshv.forecast.R
 
 import kotlinx.android.synthetic.main.current_locations_fragment.*
 

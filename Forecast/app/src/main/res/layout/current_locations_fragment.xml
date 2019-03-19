@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.example.vldrshv.forecast.StarAnimationView
+        <com.example.vldrshv.forecast.animations.StarAnimationView
             android:id="@+id/animatedView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.example.vldrshv.forecast
+package com.example.vldrshv.forecast.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +11,9 @@ import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
 
 import kotlinx.android.synthetic.main.search_locations_fragment.*
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
-import android.view.inputmethod.InputMethodManager.HIDE_IMPLICIT_ONLY
-import androidx.core.content.ContextCompat.getSystemService
-
+import com.example.vldrshv.forecast.animations.MainAnimation
+import com.example.vldrshv.forecast.R
 
 
 class SearchLocationsF : Fragment() {

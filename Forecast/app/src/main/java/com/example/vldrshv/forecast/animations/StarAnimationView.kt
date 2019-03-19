@@ -1,4 +1,4 @@
-package com.example.vldrshv.forecast
+package com.example.vldrshv.forecast.animations
 
 import android.animation.TimeAnimator
 import android.content.Context
@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
+import com.example.vldrshv.forecast.R
 
 import kotlin.random.Random
 
@@ -43,7 +44,7 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     /** How much of the alpha that's based on randomness */
     private val ALPHA_RANDOM_PART = 0.5f
     
-    private val mStars = Array(COUNT) { i -> Star()}
+    private val mStars = Array(COUNT) { i -> Star() }
     private val mRnd = Random(SEED)
     
     var mTimeAnimator : TimeAnimator? = null
@@ -111,7 +112,7 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     
     protected override fun onDraw(canvas: Canvas) {
         val viewHeight: Int = height
-        for (star:Star in mStars) {
+        for (star: Star in mStars) {
             // Ignore the star if it's outside of the view bounds
             val starSize: Float  = star.scale * mBaseSize
             if (star.y + starSize < 0 || star.y - starSize > viewHeight) {
