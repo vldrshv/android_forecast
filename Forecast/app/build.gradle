@@ -39,6 +39,7 @@ dependencies {
 
     // using retrofit for forecast server connection
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    compile "com.squareup.retrofit2:converter-gson:2.3.0"
     //implementation 'com.google.android.material:material:1.0.0-beta01'
 
     // GOOGLE MAP API

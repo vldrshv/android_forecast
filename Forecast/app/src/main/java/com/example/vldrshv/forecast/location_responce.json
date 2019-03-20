@@ -1,0 +1,480 @@
+{
+  "response": {
+    "GeoObjectCollection": {
+      "metaDataProperty": {
+        "GeocoderResponseMetaData": {
+          "request": "37.597576,55.771899",
+          "found": "8",
+          "results": "10",
+          "Point": {
+            "pos": "37.597576 55.771899"
+          }
+        }
+      },
+      "featureMember": [
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "house",
+                "text": "Russia, Moscow, 4th Tverskaya-Yamskaya Street, 7",
+                "precision": "exact",
+                "Address": {
+                  "country_code": "RU",
+                  "postal_code": "125047",
+                  "formatted": "Russia, Moscow, 4th Tverskaya-Yamskaya Street, 7",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "street",
+                      "name": "4th Tverskaya-Yamskaya Street"
+                    },
+                    {
+                      "kind": "house",
+                      "name": "7"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow, 4th Tverskaya-Yamskaya Street, 7",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow",
+                      "Locality": {
+                        "LocalityName": "Moscow",
+                        "Thoroughfare": {
+                          "ThoroughfareName": "4th Tverskaya-Yamskaya Street",
+                          "Premise": {
+                            "PremiseNumber": "7",
+                            "PostalCode": {
+                              "PostalCodeNumber": "125047"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Moscow, Russia",
+            "name": "4th Tverskaya-Yamskaya Street, 7",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "37.593471 55.769585",
+                "upperCorner": "37.601681 55.774213"
+              }
+            },
+            "Point": {
+              "pos": "37.597576 55.771899"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "street",
+                "text": "Russia, Moscow, 4th Tverskaya-Yamskaya Street",
+                "precision": "street",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Moscow, 4th Tverskaya-Yamskaya Street",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "street",
+                      "name": "4th Tverskaya-Yamskaya Street"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow, 4th Tverskaya-Yamskaya Street",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow",
+                      "Locality": {
+                        "LocalityName": "Moscow",
+                        "Thoroughfare": {
+                          "ThoroughfareName": "4th Tverskaya-Yamskaya Street"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Moscow, Russia",
+            "name": "4th Tverskaya-Yamskaya Street",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "37.593327 55.771383",
+                "upperCorner": "37.598834 55.774613"
+              }
+            },
+            "Point": {
+              "pos": "37.596085 55.773008"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "district",
+                "text": "Russia, Moscow, Tsentralniy Administrative Okrug, Tverskoy District",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Moscow, Tsentralniy Administrative Okrug, Tverskoy District",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "district",
+                      "name": "Tsentralniy Administrative Okrug"
+                    },
+                    {
+                      "kind": "district",
+                      "name": "Tverskoy District"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow, Tsentralniy Administrative Okrug, Tverskoy District",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow",
+                      "Locality": {
+                        "LocalityName": "Moscow",
+                        "DependentLocality": {
+                          "DependentLocalityName": "Tsentralniy Administrative Okrug",
+                          "DependentLocality": {
+                            "DependentLocalityName": "Tverskoy District"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Tsentralniy Administrative Okrug, Moscow, Russia",
+            "name": "Tverskoy District",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "37.57669 55.746836",
+                "upperCorner": "37.634838 55.792448"
+              }
+            },
+            "Point": {
+              "pos": "37.606918 55.770127"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "district",
+                "text": "Russia, Moscow, Tsentralniy Administrative Okrug",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Moscow, Tsentralniy Administrative Okrug",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "district",
+                      "name": "Tsentralniy Administrative Okrug"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow, Tsentralniy Administrative Okrug",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow",
+                      "Locality": {
+                        "LocalityName": "Moscow",
+                        "DependentLocality": {
+                          "DependentLocalityName": "Tsentralniy Administrative Okrug"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Moscow, Russia",
+            "name": "Tsentralniy Administrative Okrug",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "37.51441 55.710276",
+                "upperCorner": "37.713593 55.797108"
+              }
+            },
+            "Point": {
+              "pos": "37.614069 55.753995"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "locality",
+                "text": "Russia, Moscow",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Moscow",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    },
+                    {
+                      "kind": "locality",
+                      "name": "Moscow"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow",
+                      "Locality": {
+                        "LocalityName": "Moscow"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Russia",
+            "name": "Moscow",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "37.326051 55.491126",
+                "upperCorner": "37.967682 55.957565"
+              }
+            },
+            "Point": {
+              "pos": "37.617635 55.755814"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "province",
+                "text": "Russia, Moscow",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Moscow",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Moscow"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Moscow",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia",
+                    "AdministrativeArea": {
+                      "AdministrativeAreaName": "Moscow"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Russia",
+            "name": "Moscow",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "36.803259 55.142627",
+                "upperCorner": "37.967682 56.021281"
+              }
+            },
+            "Point": {
+              "pos": "37.622504 55.753215"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "province",
+                "text": "Russia, Tsentralny federalny okrug",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia, Tsentralny federalny okrug",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    },
+                    {
+                      "kind": "province",
+                      "name": "Tsentralny federalny okrug"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia, Tsentralny federalny okrug",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia"
+                  }
+                }
+              }
+            },
+            "description": "Russia",
+            "name": "Tsentralny federalny okrug",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "30.750266 49.556986",
+                "upperCorner": "47.641729 59.625172"
+              }
+            },
+            "Point": {
+              "pos": "38.064718 54.873745"
+            }
+          }
+        },
+        {
+          "GeoObject": {
+            "metaDataProperty": {
+              "GeocoderMetaData": {
+                "kind": "country",
+                "text": "Russia",
+                "precision": "other",
+                "Address": {
+                  "country_code": "RU",
+                  "formatted": "Russia",
+                  "Components": [
+                    {
+                      "kind": "country",
+                      "name": "Russia"
+                    }
+                  ]
+                },
+                "AddressDetails": {
+                  "Country": {
+                    "AddressLine": "Russia",
+                    "CountryNameCode": "RU",
+                    "CountryName": "Russia"
+                  }
+                }
+              }
+            },
+            "name": "Russia",
+            "boundedBy": {
+              "Envelope": {
+                "lowerCorner": "19.484764 41.18599",
+                "upperCorner": "191.128003 81.886117"
+              }
+            },
+            "Point": {
+              "pos": "99.505405 61.698653"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
