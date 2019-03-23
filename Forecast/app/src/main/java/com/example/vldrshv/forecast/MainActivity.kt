@@ -3,10 +3,7 @@ package com.example.vldrshv.forecast
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
-//import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-//import android.support.design.widget.BottomNavigationView
-//import androidx.core.app.Fragment
 import android.location.LocationManager
 import android.util.Log
 import android.content.pm.PackageManager
@@ -21,11 +18,9 @@ import com.example.vldrshv.forecast.fragments.CurrentLocationsF
 import com.example.vldrshv.forecast.fragments.FavouriteLocationsF
 import com.example.vldrshv.forecast.fragments.SearchLocationsF
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.os.StrictMode
 
-
-// TODO:  вставить 3 фрагмента
 // TODO:  логика БД для Favourites
-
 
 class MainActivity : AppCompatActivity(), LocationListener {
     
@@ -37,28 +32,41 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var provider: String? = null
     
     lateinit var bottomNavigationView: BottomNavigationView
-    
+
+    private var locationService: LocationService? = null
+    private var currentLocation: com.example.vldrshv.forecast.Location? = null
     private var lat: Float = 0f
     private var lng: Float = 0f
+    private var currentCity: String = ""
+
+    private var spAdapter: SharedPreferencesAdapter? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         this.savedInstanceState = savedInstanceState
+        spAdapter = SharedPreferencesAdapter(this)
+        currentCity = spAdapter!!.getString("city")
         
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavViewListener)
         bottomNavigationView.selectedItemId = R.id.action_current_location
         addFragment(CurrentLocationsF())
-    
+
+        locationService = LocationService()
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        Log.i(CLASS_TAG, rc.toString() + "")
+
         if (rc == PackageManager.PERMISSION_GRANTED) {
             getLocation()
         } else {
             checkLocationPermission()
             getLocation()
         }
+
     }
     
     private val mBottomNavViewListener =
@@ -80,6 +88,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
     
             transaction.replace(R.id.flContext, fragment).commit()
         }
+    }
+
+    private fun saveDataToSharedPref() {
+
+        spAdapter!!.putString("city", currentLocation!!.city)
+                .putFloat("lat", currentLocation!!.lat)
+                .putFloat("lng", currentLocation!!.lng)
     }
     
     /**
@@ -111,8 +126,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Log.i(CLASS_TAG, "LOCATION CHECK lat = $lat, lng = $lng")
                 locationManager!!.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-                locationManager!!.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 0, 0f, this)
+//                locationManager!!.requestLocationUpdates(
+//                        LocationManager.GPS_PROVIDER, 0, 0f, this)
             }
         }
     }
@@ -143,9 +158,20 @@ class MainActivity : AppCompatActivity(), LocationListener {
         if (!isGPSUpdated()) {
             lat = location.latitude.toFloat()
             lng = location.longitude.toFloat()
-        }
 
-        Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
+            Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
+            val response = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
+
+            val jsonResponse = response!!.string()
+            //Log.i(CLASS_TAG, jsonResponse)
+            currentLocation = locationService!!.getLocationFromJson(jsonResponse)
+            Log.i(CLASS_TAG, currentLocation.toString())
+
+            if (currentCity != currentLocation!!.city) {
+                saveDataToSharedPref()
+                addFragment(CurrentLocationsF())
+            }
+        }
     }
     
     override fun onProviderDisabled(provider: String) {

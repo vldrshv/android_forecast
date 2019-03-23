@@ -12,8 +12,11 @@ import bg.devlabs.transitioner.Transitioner
 
 import kotlinx.android.synthetic.main.search_locations_fragment.*
 import android.view.inputmethod.InputMethodManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.vldrshv.forecast.animations.MainAnimation
 import com.example.vldrshv.forecast.R
+import com.example.vldrshv.forecast.adapters.FavouriteListAdapter
 
 
 class SearchLocationsF : Fragment() {
@@ -26,8 +29,12 @@ class SearchLocationsF : Fragment() {
         activity!!.window.statusBarColor = activity!!.getColor(R.color.colorPrimary)
         
         val animation: MainAnimation = MainAnimation()
-        
         animation.start(animationFunc)
+
+        val searchingList = rootView!!.findViewById(R.id.searchingList) as RecyclerView
+        searchingList!!.layoutManager = LinearLayoutManager(activity!!)
+        searchingList!!.adapter = FavouriteListAdapter()
+
         return rootView
     }
     
@@ -35,6 +42,16 @@ class SearchLocationsF : Fragment() {
         val transition = Transitioner(starting_view, ending_view)
         transition.duration = 5
         transition.interpolator = AccelerateDecelerateInterpolator()
+        searchingList.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                transition.animateTo(percent = 0f, duration = 1000)
+                searchImage.setColorFilter(activity!!.getColor(R.color.colorMenuNotSelected))
+                val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm!!.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            }
+            false
+        }
         screen.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 transition.animateTo(percent = 0f, duration = 1000)
