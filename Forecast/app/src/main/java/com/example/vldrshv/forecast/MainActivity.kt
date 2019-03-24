@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
-    
+
             transaction.replace(R.id.flContext, fragment).commit()
         }
     }

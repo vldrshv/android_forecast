@@ -13,7 +13,7 @@ class FavouriteListAdapter : RecyclerView.Adapter<FavouriteListAdapter.Favourite
     }
 
     override fun getItemCount(): Int {
-        return 3//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return 6//TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onBindViewHolder(holder: FavouriteHolder, position: Int) {

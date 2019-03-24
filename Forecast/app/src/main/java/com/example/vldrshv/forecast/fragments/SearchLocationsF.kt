@@ -42,7 +42,7 @@ class SearchLocationsF : Fragment() {
         val transition = Transitioner(starting_view, ending_view)
         transition.duration = 5
         transition.interpolator = AccelerateDecelerateInterpolator()
-        searchingList.setOnTouchListener { v, event ->
+        screen.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 transition.animateTo(percent = 0f, duration = 1000)
                 searchImage.setColorFilter(activity!!.getColor(R.color.colorMenuNotSelected))
@@ -52,7 +52,7 @@ class SearchLocationsF : Fragment() {
             }
             false
         }
-        screen.setOnTouchListener { v, event ->
+        searchingList.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 transition.animateTo(percent = 0f, duration = 1000)
                 searchImage.setColorFilter(activity!!.getColor(R.color.colorMenuNotSelected))
