@@ -15,9 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"></activity>
-        <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

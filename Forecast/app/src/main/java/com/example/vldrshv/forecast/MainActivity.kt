@@ -19,6 +19,16 @@ import com.example.vldrshv.forecast.fragments.FavouriteLocationsF
 import com.example.vldrshv.forecast.fragments.SearchLocationsF
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.os.StrictMode
+import android.view.MotionEvent
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import bg.devlabs.transitioner.Transitioner
+import com.example.vldrshv.forecast.animations.MainAnimation
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.search_locations_fragment.*
+//import android.R
+import androidx.appcompat.widget.Toolbar
+
 
 // TODO:  логика БД для Favourites
 
@@ -67,6 +77,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
             getLocation()
         }
 
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar!!.hide()
+
+        val animation: MainAnimation = MainAnimation()
+        animation.start(animationFunc)
+
     }
     
     private val mBottomNavViewListener =
@@ -91,10 +108,42 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun saveDataToSharedPref() {
-
         spAdapter!!.putString("city", currentLocation!!.city)
                 .putFloat("lat", currentLocation!!.lat)
                 .putFloat("lng", currentLocation!!.lng)
+    }
+    private val animationFunc = {
+        val transition = Transitioner(starting_view, ending_view)
+        transition.duration = 5
+        transition.interpolator = AccelerateDecelerateInterpolator()
+//        screen.setOnTouchListener { v, event ->
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                transition.animateTo(percent = 0f, duration = 1000)
+//                searchImage.setColorFilter(activity!!.getColor(R.color.colorMenuNotSelected))
+//                val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+//                imm!!.hideSoftInputFromWindow(v.windowToken, 0)
+//                true
+//            }
+//            false
+//        }
+        searchingList.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                transition.animateTo(percent = 0f, duration = 1000)
+                searchImage.setColorFilter(getColor(R.color.colorMenuNotSelected))
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm!!.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            }
+            false
+        }
+        searchTv.setOnTouchListener{v, event ->//TouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                transition.animateTo(percent = 1f, duration = 1000)
+                searchImage.setColorFilter(getColor(R.color.colorMenuSelected))
+                true
+            }
+            false
+        }
     }
     
     /**
