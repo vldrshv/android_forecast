@@ -7,12 +7,12 @@
     android:layout_height="match_parent">
     <!-- STARTING VIEW - will move towards ending view  -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/starting_view"
+        android:id="@+id/starting_view_location"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/night_gradient_background"
         android:elevation="4dp"
-        android:tag="card"
+        android:tag="card_location"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/snow_heavy"
-                android:tag="weather"
+                android:tag="weather_location"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,14 +47,14 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:tag="linear_one">
+                android:tag="linear_one_location">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/playfair_display"
-                    android:tag="temperature"
+                    android:tag="temperature_location"
                     android:text="-4°"
                     android:textColor="@color/colorMenuSelected"
                     android:textSize="60sp"
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:fontFamily="@font/playfair_display"
-                    android:tag="city"
+                    android:tag="city_location"
                     android:text="Moscow"
                     android:textColor="@color/colorMenuNotSelected"
                     android:textSize="18sp" />
@@ -75,16 +75,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--    ENDING VIEW -->
     <LinearLayout
-        android:id="@+id/ending_view"
+        android:id="@+id/ending_view_location"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:tag="card"
+        android:tag="card_location"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +100,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/snow_heavy"
-                android:tag="weather"
+                android:tag="weather_location"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -112,7 +111,7 @@
                 android:orientation="vertical"
                 android:paddingTop="64dp"
                 android:paddingBottom="64dp"
-                android:tag="linear_one"
+                android:tag="linear_one_location"
                 android:visibility="visible">
 
                 <TextView
@@ -120,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:tag="temperature"
+                    android:tag="temperature_location"
                     android:text="21°"
                     android:textColor="@color/colorMenuSelected"
                     android:textSize="60sp"
@@ -132,7 +131,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:fontFamily="@font/playfair_display"
-                    android:tag="city"
+                    android:tag="city_location"
                     android:text="Moscow"
                     android:textAlignment="center"
                     android:textColor="@color/colorMenuNotSelected"
@@ -142,8 +141,6 @@
 
     </LinearLayout>
 
-    <!--    EXTERNAL INFO   -->
-    <!--    CHART VIEW  -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -152,7 +149,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/starting_view">
+        app:layout_constraintTop_toBottomOf="@+id/starting_view_location">
 
         <LinearLayout
             android:layout_width="match_parent"

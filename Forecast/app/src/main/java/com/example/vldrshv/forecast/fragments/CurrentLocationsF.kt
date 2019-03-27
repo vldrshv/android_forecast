@@ -35,7 +35,7 @@ class CurrentLocationsF : Fragment() {
     }
     
     private val animationFunc = {
-        val transition = Transitioner(starting_view, ending_view)
+        val transition = Transitioner(starting_view_location, ending_view_location)
         transition.duration = 5
         transition.interpolator = AccelerateDecelerateInterpolator()
         button.setOnClickListener {

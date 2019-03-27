@@ -19,28 +19,22 @@ import com.example.vldrshv.forecast.fragments.FavouriteLocationsF
 import com.example.vldrshv.forecast.fragments.SearchLocationsF
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.os.StrictMode
-import android.view.MotionEvent
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.inputmethod.InputMethodManager
-import bg.devlabs.transitioner.Transitioner
-import com.example.vldrshv.forecast.animations.MainAnimation
+import android.view.View
+
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.search_locations_fragment.*
-//import android.R
-import androidx.appcompat.widget.Toolbar
 
 
 // TODO:  логика БД для Favourites
 
 class MainActivity : AppCompatActivity(), LocationListener {
-    
+
     private val CLASS_TAG: String = "MainActivity"
     private val MY_PERMISSIONS_REQUEST_LOCATION = 1
-    
+
     private var savedInstanceState: Bundle? = null
     private var locationManager: LocationManager? = null
     private var provider: String? = null
-    
+
     lateinit var bottomNavigationView: BottomNavigationView
 
     private var locationService: LocationService? = null
@@ -50,7 +44,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
     private var currentCity: String = ""
 
     private var spAdapter: SharedPreferencesAdapter? = null
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,11 +52,12 @@ class MainActivity : AppCompatActivity(), LocationListener {
         this.savedInstanceState = savedInstanceState
         spAdapter = SharedPreferencesAdapter(this)
         currentCity = spAdapter!!.getString("city")
-        
+
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavViewListener)
         bottomNavigationView.selectedItemId = R.id.action_current_location
-        addFragment(CurrentLocationsF())
+
+        //addFragment(CurrentLocationsF())
 
         locationService = LocationService()
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -76,30 +71,31 @@ class MainActivity : AppCompatActivity(), LocationListener {
             checkLocationPermission()
             getLocation()
         }
-
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//        supportActionBar!!.hide()
-
-        val animation: MainAnimation = MainAnimation()
-        animation.start(animationFunc)
-
     }
-    
+
     private val mBottomNavViewListener =
             BottomNavigationView.OnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.action_favourite_locations -> addFragment(FavouriteLocationsF())
-                    R.id.action_current_location -> addFragment(CurrentLocationsF())
-                    R.id.action_search_location -> addFragment(SearchLocationsF())
+                    R.id.action_favourite_locations -> {
+                        addFragment(FavouriteLocationsF())
+                        starting_view.visibility = View.GONE
+                    }
+                    R.id.action_current_location -> {
+                        addFragment(CurrentLocationsF())
+                        starting_view.visibility = View.GONE
+                    }
+                    R.id.action_search_location -> {
+                        addFragment(SearchLocationsF())
+                        starting_view.visibility = View.VISIBLE
+                    }
                 }
                 true
             }
-    
+
     private fun addFragment(fragment: Fragment) {
         if (savedInstanceState == null) {
             val transaction = supportFragmentManager.beginTransaction()
-            
+
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
 
@@ -112,48 +108,15 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 .putFloat("lat", currentLocation!!.lat)
                 .putFloat("lng", currentLocation!!.lng)
     }
-    private val animationFunc = {
-        val transition = Transitioner(starting_view, ending_view)
-        transition.duration = 5
-        transition.interpolator = AccelerateDecelerateInterpolator()
-//        screen.setOnTouchListener { v, event ->
-//            if (event.action == MotionEvent.ACTION_DOWN) {
-//                transition.animateTo(percent = 0f, duration = 1000)
-//                searchImage.setColorFilter(activity!!.getColor(R.color.colorMenuNotSelected))
-//                val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-//                imm!!.hideSoftInputFromWindow(v.windowToken, 0)
-//                true
-//            }
-//            false
-//        }
-        searchingList.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                transition.animateTo(percent = 0f, duration = 1000)
-                searchImage.setColorFilter(getColor(R.color.colorMenuNotSelected))
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                imm!!.hideSoftInputFromWindow(v.windowToken, 0)
-                true
-            }
-            false
-        }
-        searchTv.setOnTouchListener{v, event ->//TouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                transition.animateTo(percent = 1f, duration = 1000)
-                searchImage.setColorFilter(getColor(R.color.colorMenuSelected))
-                true
-            }
-            false
-        }
-    }
-    
+
     /**
      * ========================================================================================
      * LOCATION METHODS
      * ========================================================================================
      */
-    
+
     private fun isGPSUpdated() : Boolean = lat != 0f && lng != 0f
-    
+
     private fun checkLocationPermission() {
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         Log.i(CLASS_TAG, rc.toString() + "")
@@ -164,13 +127,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
             getLocation()
         }
     }
-    
+
     private fun getLocation() {
         Log.i(CLASS_TAG, "HANDLE")
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (rc == PackageManager.PERMISSION_GRANTED ) {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            
+
             if (!isGPSUpdated()) {
                 Log.i(CLASS_TAG, "LOCATION CHECK lat = $lat, lng = $lng")
                 locationManager!!.requestLocationUpdates(
@@ -180,17 +143,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
         }
     }
-    
+
     private fun requestGpsPermission() {
         Log.w(CLASS_TAG, "GPS permission is not granted. Requesting permission")
         val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-        
+
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
                         Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS_REQUEST_LOCATION)
         }
     }
-    
+
     @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
@@ -202,7 +165,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
             }
         }
     }
-    
+
     override fun onLocationChanged(location: Location) {
         if (!isGPSUpdated()) {
             lat = location.latitude.toFloat()
@@ -211,33 +174,29 @@ class MainActivity : AppCompatActivity(), LocationListener {
             Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
             val response = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
 
-            val jsonResponse = response!!.string()
-            //Log.i(CLASS_TAG, jsonResponse)
-            currentLocation = locationService!!.getLocationFromJson(jsonResponse)
-            Log.i(CLASS_TAG, currentLocation.toString())
-
-            if (currentCity != currentLocation!!.city) {
+            if (response != null) {
+                val jsonResponse = response!!.string()
+                //Log.i(CLASS_TAG, jsonResponse)
+                currentLocation = locationService!!.getLocationFromJson(jsonResponse)
+                Log.i(CLASS_TAG, currentLocation.toString())
+            }
+            if (currentLocation != null && currentCity != currentLocation!!.city) {
                 saveDataToSharedPref()
+                // todo add location change broadcast
                 addFragment(CurrentLocationsF())
             }
         }
     }
-    
+
     override fun onProviderDisabled(provider: String) {
         Log.i("Latitude", "disable")
     }
-    
+
     override fun onProviderEnabled(provider: String) {
         Log.i("Latitude", "enable")
     }
-    
+
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
         Log.i("Latitude", "status")
     }
 }
-
-
-
-
-
-
