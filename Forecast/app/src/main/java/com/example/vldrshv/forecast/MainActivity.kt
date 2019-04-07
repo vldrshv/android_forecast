@@ -20,6 +20,9 @@ import com.example.vldrshv.forecast.fragments.SearchLocationsF
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.os.StrictMode
 import android.view.View
+import com.example.vldrshv.forecast.adapters.SharedPreferencesAdapter
+import com.example.vldrshv.forecast.dao.LocationDataSource
+import com.example.vldrshv.forecast.service.LocationService
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -48,23 +51,42 @@ class MainActivity : AppCompatActivity(), LocationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
         this.savedInstanceState = savedInstanceState
+        
+        initVariables()
+        initLocationsDB()
+        startLocationService()
+    }
+    
+    private fun initVariables() {
         spAdapter = SharedPreferencesAdapter(this)
         currentCity = spAdapter!!.getString("city")
-
+    
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavViewListener)
         bottomNavigationView.selectedItemId = R.id.action_current_location
-
-        //addFragment(CurrentLocationsF())
-
+    }
+    private fun initLocationsDB() {
+        var locationDB: LocationDataSource = LocationDataSource(this)
+        var location: com.example.vldrshv.forecast.Location = Location()
+        location.id = 294021
+        location.cityEng = "Moscow"
+        location.cityRus = "Москва"
+        location.country.id = "RU"
+        location.country.name = "Russia"
+        location.geoposition.lat = 55.751244f
+        location.geoposition.lng = 37.618423f
+        
+        locationDB.insert(locationDB, location)
+    }
+    private fun startLocationService() {
         locationService = LocationService()
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-
+    
         val rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-
+    
         if (rc == PackageManager.PERMISSION_GRANTED) {
             getLocation()
         } else {
@@ -104,9 +126,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun saveDataToSharedPref() {
-        spAdapter!!.putString("city", currentLocation!!.city)
-                .putFloat("lat", currentLocation!!.lat)
-                .putFloat("lng", currentLocation!!.lng)
+        spAdapter!!.putString("cityEng", currentLocation!!.cityEng)
+                .putString("cityRus", currentLocation!!.cityRus)
+                .putFloat("lat", currentLocation!!.geoposition.lat)
+                .putFloat("lng", currentLocation!!.geoposition.lng)
     }
 
     /**
@@ -172,15 +195,9 @@ class MainActivity : AppCompatActivity(), LocationListener {
             lng = location.longitude.toFloat()
 
             Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
-            val response = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
-
-            if (response != null) {
-                val jsonResponse = response!!.string()
-                //Log.i(CLASS_TAG, jsonResponse)
-                currentLocation = locationService!!.getLocationFromJson(jsonResponse)
-                Log.i(CLASS_TAG, currentLocation.toString())
-            }
-            if (currentLocation != null && currentCity != currentLocation!!.city) {
+            currentLocation = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
+            
+            if (currentLocation != null && currentCity != currentLocation!!.cityEng) {
                 saveDataToSharedPref()
                 // todo add location change broadcast
                 addFragment(CurrentLocationsF())

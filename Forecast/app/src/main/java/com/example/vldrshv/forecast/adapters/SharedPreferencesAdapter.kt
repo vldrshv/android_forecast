@@ -1,4 +1,4 @@
-package com.example.vldrshv.forecast
+package com.example.vldrshv.forecast.adapters
 
 import android.content.Context
 import android.content.SharedPreferences

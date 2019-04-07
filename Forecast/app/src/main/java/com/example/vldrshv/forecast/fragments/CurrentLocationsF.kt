@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import bg.devlabs.transitioner.Transitioner
 import com.example.vldrshv.forecast.animations.MainAnimation
 import com.example.vldrshv.forecast.R
-import com.example.vldrshv.forecast.SharedPreferencesAdapter
+import com.example.vldrshv.forecast.adapters.SharedPreferencesAdapter
 
 import kotlinx.android.synthetic.main.current_locations_fragment.*
 

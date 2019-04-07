@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vldrshv.forecast.Location
 import com.example.vldrshv.forecast.R
-import com.example.vldrshv.forecast.adapters.FavouriteListAdapter
+import com.example.vldrshv.forecast.adapters.LocationListAdapter
+import com.example.vldrshv.forecast.dao.LocationDataSource
 
 
 class FavouriteLocationsF : Fragment() {
@@ -21,9 +23,12 @@ class FavouriteLocationsF : Fragment() {
         rootView = inflater?.inflate(R.layout.favourite_locations_fragment, container, false)
         activity!!.window.statusBarColor = activity!!.getColor(R.color.colorPrimary)
 
+        val locationDB: LocationDataSource = LocationDataSource(activity!!)
+        val listLocations: List<Location> = locationDB.selectAll(locationDB)
+        
         favouritesList = rootView!!.findViewById(R.id.favouritesList) as RecyclerView
         favouritesList!!.layoutManager = LinearLayoutManager(activity!!)
-        favouritesList!!.adapter = FavouriteListAdapter()
+        favouritesList!!.adapter = LocationListAdapter(listLocations, activity!!)
 
         return rootView
     }
