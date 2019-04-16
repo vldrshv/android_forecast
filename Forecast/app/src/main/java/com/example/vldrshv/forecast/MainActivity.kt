@@ -25,6 +25,9 @@ import com.example.vldrshv.forecast.dao.LocationDataSource
 import com.example.vldrshv.forecast.service.LocationService
 
 import kotlinx.android.synthetic.main.activity_main.*
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.widget.Toast
 
 
 // TODO:  логика БД для Favourites
@@ -48,6 +51,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private var spAdapter: SharedPreferencesAdapter? = null
 
+    enum class Fragments {
+        F_CURRENT_LOCATION, F_SEARCH_LOCATION, F_FAVOURITE_LOCATION
+    }
+    private var fragmentState: Fragments = Fragments.F_CURRENT_LOCATION
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,7 +63,6 @@ class MainActivity : AppCompatActivity(), LocationListener {
         this.savedInstanceState = savedInstanceState
         
         initVariables()
-        initLocationsDB()
         startLocationService()
     }
     
@@ -66,20 +73,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavViewListener)
         bottomNavigationView.selectedItemId = R.id.action_current_location
+        addFragment(CurrentLocationsF())
+        fragmentState = Fragments.F_CURRENT_LOCATION
     }
-    private fun initLocationsDB() {
-        var locationDB: LocationDataSource = LocationDataSource(this)
-        var location: com.example.vldrshv.forecast.Location = Location()
-        location.id = 294021
-        location.cityEng = "Moscow"
-        location.cityRus = "Москва"
-        location.country.id = "RU"
-        location.country.name = "Russia"
-        location.geoposition.lat = 55.751244f
-        location.geoposition.lng = 37.618423f
-        
-        locationDB.insert(locationDB, location)
-    }
+
     private fun startLocationService() {
         locationService = LocationService()
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -101,14 +98,17 @@ class MainActivity : AppCompatActivity(), LocationListener {
                     R.id.action_favourite_locations -> {
                         addFragment(FavouriteLocationsF())
                         starting_view.visibility = View.GONE
+                        fragmentState = Fragments.F_FAVOURITE_LOCATION
                     }
                     R.id.action_current_location -> {
                         addFragment(CurrentLocationsF())
                         starting_view.visibility = View.GONE
+                        fragmentState = Fragments.F_CURRENT_LOCATION
                     }
                     R.id.action_search_location -> {
                         addFragment(SearchLocationsF())
                         starting_view.visibility = View.VISIBLE
+                        fragmentState = Fragments.F_SEARCH_LOCATION
                     }
                 }
                 true
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     private fun saveDataToSharedPref() {
         spAdapter!!.putString("cityEng", currentLocation!!.cityEng)
-                .putString("cityRus", currentLocation!!.cityRus)
+                .putString("cityRus", currentLocation!!.localizedName)
                 .putFloat("lat", currentLocation!!.geoposition.lat)
                 .putFloat("lng", currentLocation!!.geoposition.lng)
     }
@@ -157,13 +157,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
         if (rc == PackageManager.PERMISSION_GRANTED ) {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-            if (!isGPSUpdated()) {
-                Log.i(CLASS_TAG, "LOCATION CHECK lat = $lat, lng = $lng")
+
+                if (!isGPSUpdated()) {
+                    Log.i(CLASS_TAG, "LOCATION CHECK lat = $lat, lng = $lng")
+                    locationManager!!.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER, 0, 0f, this)
                 locationManager!!.requestLocationUpdates(
-                        LocationManager.NETWORK_PROVIDER, 0, 0f, this)
-//                locationManager!!.requestLocationUpdates(
-//                        LocationManager.GPS_PROVIDER, 0, 0f, this)
-            }
+                        LocationManager.GPS_PROVIDER, 0, 0f, this)
+                }
         }
     }
 
@@ -191,16 +192,19 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         if (!isGPSUpdated()) {
-            lat = location.latitude.toFloat()
-            lng = location.longitude.toFloat()
-
             Log.i(CLASS_TAG, "Latitude:$lat, Longitude:$lng")
-            currentLocation = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
-            
+            if (hasInternetConnection()) {
+                lat = location.latitude.toFloat()
+                lng = location.longitude.toFloat()
+                currentLocation = locationService!!.service.getLocationJson("$lat,$lng").execute().body()
+            } else
+                Toast.makeText(this, "Check internet connection", Toast.LENGTH_LONG).show()
+
             if (currentLocation != null && currentCity != currentLocation!!.cityEng) {
                 saveDataToSharedPref()
                 // todo add location change broadcast
-                addFragment(CurrentLocationsF())
+                if (fragmentState == Fragments.F_CURRENT_LOCATION)
+                    addFragment(CurrentLocationsF())
             }
         }
     }
@@ -215,5 +219,13 @@ class MainActivity : AppCompatActivity(), LocationListener {
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
         Log.i("Latitude", "status")
+    }
+
+    private fun hasInternetConnection(): Boolean {
+        val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val wifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+        val mobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+
+        return wifi.isConnected || mobile.isConnected
     }
 }

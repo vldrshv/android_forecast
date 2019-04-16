@@ -5,21 +5,24 @@ import com.google.gson.annotations.SerializedName
 class Location() {
     @SerializedName("Key")
     var id: Int = 0
-    
     @SerializedName("LocalizedName")
-    var cityRus: String? = ""
-    
+    var localizedName: String? = ""
     @SerializedName("EnglishName")
     var cityEng: String = ""
-    
     @SerializedName("Country")
     var country: Country = Country()
-    
     @SerializedName("GeoPosition")
     var geoposition: Geoposition = Geoposition()
 
+    var isSearched: Boolean = false
+    var isFavourite: Boolean = false
+
     override fun toString(): String {
-        return "Location(id=$id, city='$cityRus', cityEng='$cityEng', country=$country , geoposition=$geoposition)"
+        return "Location(id=$id, cityRus='$localizedName', cityEng='$cityEng', country=$country , geoposition=$geoposition)"
+    }
+
+    fun isNull(): Boolean {
+        return id == 0
     }
 
 }

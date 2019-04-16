@@ -17,6 +17,8 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
         const val COLUMN_NAME_COUNTRY = "countryName"
         const val COLUMN_NAME_LAT = "latitude"
         const val COLUMN_NAME_LNG = "longitude"
+        const val IS_SEARCHED = "is_searched"
+        const val IS_FAVOURITE = "is_favourite"
     }
 
     private val SQL_CREATE_ENTRIES =
@@ -27,7 +29,9 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
                     "${LocationEntry.COLUMN_NAME_COUNTRY_ID} TEXT," +
                     "${LocationEntry.COLUMN_NAME_COUNTRY} TEXT," +
                     "${LocationEntry.COLUMN_NAME_LAT} TEXT," +
-                    "${LocationEntry.COLUMN_NAME_LNG} TEXT)"
+                    "${LocationEntry.COLUMN_NAME_LNG} TEXT," +
+                    "${LocationEntry.IS_SEARCHED} INTEGER," +
+                    "${LocationEntry.IS_FAVOURITE} INTEGER)"
 
     private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${LocationEntry.TABLE_NAME}"
 
@@ -49,23 +53,25 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
         const val DATABASE_NAME = "LocationDataSource.db"
     }
 
-    fun insert(dbHelper: LocationDataSource, location: Location){
-        val db = dbHelper.writableDatabase
+    fun insert(location: Location){
+        val db = this.writableDatabase
         val values = ContentValues().apply {
             put(LocationEntry.COLUMN_NAME_ID, location.id)
-            put(LocationEntry.COLUMN_NAME_CITY_RUS, location.cityRus)
+            put(LocationEntry.COLUMN_NAME_CITY_RUS, location.localizedName)
             put(LocationEntry.COLUMN_NAME_CITY_ENG, location.cityEng)
             put(LocationEntry.COLUMN_NAME_COUNTRY_ID, location.country.id)
             put(LocationEntry.COLUMN_NAME_COUNTRY, location.country.name)
             put(LocationEntry.COLUMN_NAME_LAT, location.geoposition.lat)
             put(LocationEntry.COLUMN_NAME_LNG, location.geoposition.lng)
+            put(LocationEntry.IS_FAVOURITE, if (location.isFavourite) 1 else 0)
+            put(LocationEntry.IS_SEARCHED, if (location.isSearched) 1 else 0)
         }
 
         db?.insert(LocationEntry.TABLE_NAME, null, values)
     }
 
-    fun selectAll(dbHelper: LocationDataSource): List<Location> {
-        val db = dbHelper.readableDatabase
+    fun selectAll(): ArrayList<Location> {
+        val db = this.readableDatabase
 
         val cursor = db.query(
                 LocationEntry.TABLE_NAME,              // The table to query
@@ -76,17 +82,19 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 null,                           // don't filter by row groups
                 null //sortOrder               // The sort order
         )
-        val items = mutableListOf<Location>()
+        val items = arrayListOf<Location>()
         with(cursor) {
             while (moveToNext()) {
                 val location = Location()
                 location.id = getInt(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_ID))
-                location.cityRus = getString(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_CITY_RUS))
+                location.localizedName = getString(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_CITY_RUS))
                 location.cityEng = getString(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_CITY_ENG))
                 location.country.id = getString(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_COUNTRY_ID))
                 location.country.name = getString(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_COUNTRY))
                 location.geoposition.lat = getFloat(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_LAT))
                 location.geoposition.lng = getFloat(getColumnIndexOrThrow(LocationEntry.COLUMN_NAME_LNG))
+                location.isSearched = getInt(getColumnIndexOrThrow(LocationEntry.IS_SEARCHED)) == 1
+                location.isFavourite = getInt(getColumnIndexOrThrow(LocationEntry.IS_FAVOURITE)) == 1
 
                 items.add(location)
             }
@@ -97,6 +105,22 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
     private fun deleteAll() {
         val db = this.writableDatabase
         db?.delete(LocationEntry.TABLE_NAME, null, null)
+    }
+
+    private fun update(location: Location) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(LocationEntry.COLUMN_NAME_ID, location.id)
+            put(LocationEntry.COLUMN_NAME_CITY_RUS, location.localizedName)
+            put(LocationEntry.COLUMN_NAME_CITY_ENG, location.cityEng)
+            put(LocationEntry.COLUMN_NAME_COUNTRY_ID, location.country.id)
+            put(LocationEntry.COLUMN_NAME_COUNTRY, location.country.name)
+            put(LocationEntry.COLUMN_NAME_LAT, location.geoposition.lat)
+            put(LocationEntry.COLUMN_NAME_LNG, location.geoposition.lng)
+            put(LocationEntry.IS_FAVOURITE, if (location.isFavourite) 1 else 0)
+            put(LocationEntry.IS_SEARCHED, if (location.isSearched) 1 else 0)
+        }
+        db?.update(LocationEntry.TABLE_NAME, values, "${LocationEntry.COLUMN_NAME_ID} = ${location.id}", null)
     }
 }
 

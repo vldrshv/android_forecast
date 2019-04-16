@@ -24,11 +24,11 @@ class FavouriteLocationsF : Fragment() {
         activity!!.window.statusBarColor = activity!!.getColor(R.color.colorPrimary)
 
         val locationDB: LocationDataSource = LocationDataSource(activity!!)
-        val listLocations: List<Location> = locationDB.selectAll(locationDB)
-        
+        val listLocations: ArrayList<Location> = locationDB.selectAll()
+
         favouritesList = rootView!!.findViewById(R.id.favouritesList) as RecyclerView
         favouritesList!!.layoutManager = LinearLayoutManager(activity!!)
-        favouritesList!!.adapter = LocationListAdapter(listLocations, activity!!)
+        favouritesList!!.adapter = LocationListAdapter(listLocations, activity!!) { println(it.id)}
 
         return rootView
     }

@@ -15,15 +15,18 @@ import kotlin.random.Random
  * Continuous animation where stars slide from the bottom to the top
  * Created by Patrick Ivarsson on 7/23/17.
  */
-class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
-                         defStyleRes: Int = 0)
-    : View(context, attrs, defStyleAttr, defStyleRes) {
+class WeatherAnimationView (
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+        var defStyleRes: Int = 0
+) : View(context, attrs, defStyleAttr, defStyleRes) {
     
     init {
         init()
     }
     
-    private class Star {
+    private class WeatherObj {
         var x : Float = 0f
         var y : Float = 0f
         var scale : Float = 0f
@@ -44,7 +47,7 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     /** How much of the alpha that's based on randomness */
     private val ALPHA_RANDOM_PART = 0.5f
     
-    private val mStars = Array(COUNT) { i -> Star() }
+    private val mStars = Array(COUNT) { i -> WeatherObj() }
     private val mRnd = Random(SEED)
     
     var mTimeAnimator : TimeAnimator? = null
@@ -66,40 +69,40 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
     }
     
     private fun init() {
-        mDrawable = ContextCompat.getDrawable(context, R.drawable.snow)//R.drawable.star)
+        mDrawable = ContextCompat.getDrawable(context, defStyleRes)//, R.drawable.snow)//R.drawable.star)
         mBaseSize = Math.max(mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight) / 4f
         mBaseSpeed = BASE_SPEED_DP_PER_S * resources.displayMetrics.density
     }
     
     /**
-     * Initialize the given star by randomizing it's position, scale and alpha
-     * @param star the star to initialize
+     * Initialize the given weatherObj by randomizing it's position, scale and alpha
+     * @param weatherObj the weatherObj to initialize
      * @param viewWidth the view width
      * @param viewHeight the view height
      */
-    private fun initializeStar(star: Star, viewWidth: Int, viewHeight: Int) : Star {
+    private fun initializeObj(weatherObj: WeatherObj, viewWidth: Int, viewHeight: Int) : WeatherObj {
         // Set the scale based on a min value and a random multiplier
-        star.scale = SCALE_MIN_PART + SCALE_RANDOM_PART * mRnd.nextFloat()
+        weatherObj.scale = SCALE_MIN_PART + SCALE_RANDOM_PART * mRnd.nextFloat()
         
         // Set X to a random value within the width of the view
-        star.x = viewWidth * mRnd.nextFloat()
+        weatherObj.x = viewWidth * mRnd.nextFloat()
         
         // Set the Y position
         // Start at the bottom of the view
-        star.y = -viewHeight.toFloat() / 3
-        // The Y value is in the center of the star, add the size
+        weatherObj.y = -viewHeight.toFloat() / 3
+        // The Y value is in the center of the weatherObj, add the size
         // to make sure it starts outside of the view bound
-        star.y += star.scale * mBaseSize
+        weatherObj.y += weatherObj.scale * mBaseSize
         // Add a random offset to create a small delay before the
-        // star appears again.
-        star.y += viewHeight * mRnd.nextFloat() / 4f
+        // weatherObj appears again.
+        weatherObj.y += viewHeight * mRnd.nextFloat() / 4f
         
-        // The alpha is determined by the scale of the star and a random multiplier.
-        star.alpha = ALPHA_SCALE_PART * star.scale + ALPHA_RANDOM_PART * mRnd.nextFloat()
-        // The bigger and brighter a star is, the faster it moves
-        star.speed = mBaseSpeed * star.alpha * star.scale
+        // The alpha is determined by the scale of the weatherObj and a random multiplier.
+        weatherObj.alpha = ALPHA_SCALE_PART * weatherObj.scale + ALPHA_RANDOM_PART * mRnd.nextFloat()
+        // The bigger and brighter a weatherObj is, the faster it moves
+        weatherObj.speed = mBaseSpeed * weatherObj.alpha * weatherObj.scale
         
-        return star
+        return weatherObj
     }
     
     protected override fun onSizeChanged(width: Int, height: Int, oldw: Int, oldh: Int) {
@@ -107,36 +110,36 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
         
         // The starting position is dependent on the size of the view,
         // which is why the model is initialized here, when the view is measured.
-        mStars.forEach {initializeStar(it, width, height)}
+        mStars.forEach {initializeObj(it, width, height)}
     }
     
     protected override fun onDraw(canvas: Canvas) {
         val viewHeight: Int = height
-        for (star: Star in mStars) {
-            // Ignore the star if it's outside of the view bounds
-            val starSize: Float  = star.scale * mBaseSize
-            if (star.y + starSize < 0 || star.y - starSize > viewHeight) {
-//            if (star.y - starSize > 0 || star.y + starSize < viewHeight) {
+        for (weatherObj: WeatherObj in mStars) {
+            // Ignore the weatherObj if it's outside of the view bounds
+            val starSize: Float  = weatherObj.scale * mBaseSize
+            if (weatherObj.y + starSize < 0 || weatherObj.y - starSize > viewHeight) {
+//            if (weatherObj.y - starSize > 0 || weatherObj.y + starSize < viewHeight) {
                 continue
             }
             
             // Save the current canvas state
             val save: Int = canvas.save()
             
-            // Move the canvas to the center of the star
-            canvas.translate(star.x, star.y)
+            // Move the canvas to the center of the weatherObj
+            canvas.translate(weatherObj.x, weatherObj.y)
             
-            // Rotate the canvas based on how far the star has moved
-//            val progress: Float = (star.y + starSize) / viewHeight
-            val progress: Float = (star.y - starSize) / viewHeight
-            canvas.rotate(360 * progress)
+            // Rotate the canvas based on how far the weatherObj has moved
+//            val progress: Float = (weatherObj.y + starSize) / viewHeight
+//            val progress: Float = (weatherObj.y - starSize) / viewHeight
+//            canvas.rotate(360 * progress)
             
             // Prepare the size and alpha of the drawable
             val size: Int = Math.round(starSize)
             mDrawable!!.setBounds(-size, -size, size, size)
-            mDrawable!!.alpha = Math.round(255 * star.alpha)
+            mDrawable!!.alpha = Math.round(255 * weatherObj.alpha)
             
-            // Draw the star to the canvas
+            // Draw the weatherObj to the canvas
             mDrawable!!.draw(canvas)
             
             // Restore the canvas to it's previous position and rotation
@@ -204,17 +207,17 @@ class StarAnimationView (context: Context, attrs: AttributeSet? = null, defStyle
         val viewWidth: Int = width
         val viewHeight: Int = height
         
-        for (star: Star in mStars) {
-            // Move the star based on the elapsed time and it's speed
-            star.y += star.speed * deltaSeconds
-//            star.y -= star.speed * deltaSeconds
+        for (weatherObj: WeatherObj in mStars) {
+            // Move the weatherObj based on the elapsed time and it's speed
+            weatherObj.y += weatherObj.speed * deltaSeconds
+//            weatherObj.y -= weatherObj.speed * deltaSeconds
             
-            // If the star is completely outside of the view bounds after
+            // If the weatherObj is completely outside of the view bounds after
             // updating it's position, recycle it.
-            val size: Float = star.scale * mBaseSize;
-//            if (star.y + size < 0) {
-            if (star.y - size > viewHeight) {
-                initializeStar(star, viewWidth, viewHeight)
+            val size: Float = weatherObj.scale * mBaseSize;
+//            if (weatherObj.y + size < 0) {
+            if (weatherObj.y - size > viewHeight) {
+                initializeObj(weatherObj, viewWidth, viewHeight)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.vldrshv.forecast.service
 
+import com.example.vldrshv.forecast.DailyForecast
 import com.example.vldrshv.forecast.Location
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -12,8 +13,11 @@ interface LocationI {
     @GET("/locations/v1/cities/geoposition/search?apikey=$API_KEY&toplevel=true&language=ru-ru")
     fun getLocationJson(@Query("q") lngLatString: String): Call<Location>
 
-    @GET("locations/v1/cities/autocomplete?apikey=$API_KEY")
-    fun getLocationsList(@Query("q") city: String): Call<List<Location>>
+    @GET("/locations/v1/cities/autocomplete?apikey=$API_KEY")
+    fun getLocationsList(@Query("q") city: String): Call<ArrayList<Location>>
+
+    @GET("/forecasts/v1/daily/5day/{cityId}?apikey=$API_KEY&details=true&metric=true")
+    fun getDailyForecast(@Path("cityId") cityId: Int): Call<DailyForecast>
 
     private companion object LocationAPI{
         const val API_KEY: String = "inhxFCga0fsTKrB1aZZqU5jmuLnkbYxM"
