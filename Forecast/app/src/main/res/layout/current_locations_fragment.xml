@@ -43,7 +43,7 @@
                 android:tag="linear_one_location">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textViewTemperature"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/playfair_display"
@@ -119,17 +119,17 @@
                     android:textSize="60sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewCity2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/playfair_display"
-                    android:tag="city_location"
-                    android:text="Moscow"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorMenuNotSelected"
-                    android:textSize="18sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/textViewCity2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:fontFamily="@font/playfair_display"-->
+                    <!--android:tag="city_location"-->
+                    <!--android:text="Moscow"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="@color/colorMenuNotSelected"-->
+                    <!--android:textSize="18sp" />-->
             </LinearLayout>
         </LinearLayout>
 

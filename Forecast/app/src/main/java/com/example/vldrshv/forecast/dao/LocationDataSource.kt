@@ -67,7 +67,7 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
             put(LocationEntry.IS_SEARCHED, if (location.isSearched) 1 else 0)
         }
 
-        db?.insert(LocationEntry.TABLE_NAME, null, values)
+        db?.replace(LocationEntry.TABLE_NAME, null, values)
     }
 
     fun selectAll(): ArrayList<Location> {
@@ -80,7 +80,7 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 null, //selectionArgs,     // The values for the WHERE clause
                 null,                          // don't group the rows
                 null,                           // don't filter by row groups
-                null //sortOrder               // The sort order
+                null                           // The sort order
         )
         val items = arrayListOf<Location>()
         with(cursor) {

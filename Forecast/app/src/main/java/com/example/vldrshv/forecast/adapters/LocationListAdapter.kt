@@ -28,18 +28,6 @@ class LocationListAdapter(
 
     override fun onBindViewHolder(holder: LocationHolder, position: Int) {
         holder.bind(locationList[position], listener)
-//        holder?.layoutWeather.visibility = View.GONE
-//        if (!locationList[0].isNull())
-//            holder?.imageWeather.setImageResource(R.drawable.night_clear)
-//        else
-//            holder?.imageWeather.visibility = View.INVISIBLE
-//        holder?.tvLocation.text = if (locationList[position].cityEng.equals(""))
-//            locationList[position].cityRus
-//        else
-//            locationList[position].cityEng
-//        holder?.tvCountry.text = locationList[position].country.name
-//
-//        holder.itemView.setOnClickListener(listener) //{ println("position = $position") }
     }
 
     class LocationHolder(itemView: View, var locationList: List<Location>) : RecyclerView.ViewHolder(itemView) {

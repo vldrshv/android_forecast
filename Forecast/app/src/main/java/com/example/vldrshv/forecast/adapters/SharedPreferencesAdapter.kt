@@ -28,11 +28,23 @@ class SharedPreferencesAdapter(context: Context) {
         return this
     }
 
+    fun putInt(key: String, value: Int) : SharedPreferencesAdapter {
+        with(sp!!.edit()) {
+            putInt(key, value)
+            apply()
+        }
+        return this
+    }
+
     fun getString(key: String) : String {
         return sp!!.getString(key, "") ?: ""
     }
 
     fun getFloat(key: String) : Float {
         return sp!!.getFloat(key, 0f)
+    }
+
+    fun getInt(key: String) : Int {
+        return sp!!.getInt(key, 0)
     }
 }

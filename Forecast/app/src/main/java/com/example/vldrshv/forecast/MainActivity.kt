@@ -130,6 +130,11 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 .putString("cityRus", currentLocation!!.localizedName)
                 .putFloat("lat", currentLocation!!.geoposition.lat)
                 .putFloat("lng", currentLocation!!.geoposition.lng)
+                .putInt("id", currentLocation!!.id)
+    }
+    private fun saveDataToLocationDB() {
+        val locationDB: LocationDataSource = LocationDataSource(this);
+        locationDB.insert(currentLocation!!)
     }
 
     /**
@@ -201,7 +206,8 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 Toast.makeText(this, "Check internet connection", Toast.LENGTH_LONG).show()
 
             if (currentLocation != null && currentCity != currentLocation!!.cityEng) {
-                saveDataToSharedPref()
+                saveDataToSharedPref() // save context
+                saveDataToLocationDB() // save to locationDB for faster accessing
                 // todo add location change broadcast
                 if (fragmentState == Fragments.F_CURRENT_LOCATION)
                     addFragment(CurrentLocationsF())
