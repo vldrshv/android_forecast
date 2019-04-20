@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName
 class DailyForecast {
     @SerializedName("DailyForecasts")
     var forecast: List<Weather> = listOf()
+
+    override fun toString(): String {
+        return "DailyForecast(forecast=$forecast)"
+    }
 }
 class Weather{
     @SerializedName("Date")
@@ -33,7 +37,7 @@ class Weather{
 class SpaceObj {
     @SerializedName("Rise")
     var riseTime: String = ""
-    @SerializedName("Date")
+    @SerializedName("Set")
     var setTime: String = ""
 }
 class Temperature {

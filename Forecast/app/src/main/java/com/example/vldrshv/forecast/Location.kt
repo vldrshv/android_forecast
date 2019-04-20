@@ -18,7 +18,8 @@ class Location() {
     var isFavourite: Boolean = false
 
     override fun toString(): String {
-        return "Location(id=$id, cityRus='$localizedName', cityEng='$cityEng', country=$country , geoposition=$geoposition)"
+        return "Location(id=$id, cityRus='$localizedName', cityEng='$cityEng', country=$country , geoposition=$geoposition, isFavourite=$isFavourite" +
+                ", isSearched=$isSearched)"
     }
 
     fun isNull(): Boolean {

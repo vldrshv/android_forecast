@@ -10,6 +10,21 @@ import com.example.vldrshv.forecast.R
 import kotlinx.android.synthetic.main.current_locations_fragment.view.*
 import kotlinx.android.synthetic.main.favourite_location_card.view.*
 
+
+/**
+ * LOCATION LIST ADAPTER
+ *
+ * Uses to make RecycleView contain LocationView
+ * Contains of:
+ * --   locationList - List of locations
+ * --   context - current activity context)
+ * --   listener - onItemClickListener
+ *
+ * One class for SEARCH LOCATION FRAGMENT and FAVOURITE LOCATIONS FRAGMENT
+ * todo #1 add weather update (weather temp)
+ * todo #2 add weather update (weather icon)
+ * todo #3 add time stamp (localization)
+ */
 class LocationListAdapter(
         var locationList: ArrayList<Location>,
         var context: Context,
@@ -18,7 +33,7 @@ class LocationListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.favourite_location_card, parent, false)
-        return LocationHolder(itemView, locationList)
+        return LocationHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -30,19 +45,17 @@ class LocationListAdapter(
         holder.bind(locationList[position], listener)
     }
 
-    class LocationHolder(itemView: View, var locationList: List<Location>) : RecyclerView.ViewHolder(itemView) {
+    class LocationHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(location: Location, listener: (Location) -> Unit) {
-            println(location)
+
             if (location.isNull()){
                 itemView.tvLocation.text = ""
                 itemView.tvCountry.text = ""
                 itemView.tvTemperature.text = ""
                 itemView.tvTime.text = ""
-                //itemView.setOnClickListener { listener(location) }
                 return
             }
-            if(locationList[0].isNull())
-                itemView.imageWeather.visibility = View.INVISIBLE
+
             itemView.tvLocation.text = if (location.cityEng.equals("")) location.localizedName else location.cityEng
             itemView.tvCountry.text = location.country.name
             itemView.layoutWeather.tvTemperature.text = location.id.toString()

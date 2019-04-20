@@ -112,8 +112,13 @@ class SearchLocationsF : Fragment() {
         onClickListener = {
             var dialog = AlertDialog.Builder(activity!!).setTitle("Add to favourites?")
                     .setPositiveButton("Yes") {
-                        dialog: DialogInterface, which: Int -> locationDB?.insert(it)
-
+                        dialog: DialogInterface, which: Int ->
+                        run {
+                            it.isSearched = true
+                            it.isFavourite = true
+                            Log.i(CLASS_TAG, it.toString())
+                            locationDB?.insert(it)
+                        }
                     }
                     .setNegativeButton("No") {
                         dialog: DialogInterface, which: Int -> dialog.dismiss()
@@ -152,11 +157,12 @@ class SearchLocationsF : Fragment() {
             locationList!!.clear()
             locationList!!.add(Location())
             val newLocationList: List<Location>? = locationService?.service?.getLocationsList(s)?.execute()?.body()
-            newLocationList ?: locationList!!.addAll(newLocationList!!)
+            if (newLocationList != null)
+                locationList!!.addAll(newLocationList!!)
 
             Log.i(CLASS_TAG, "locationList.size = ${locationList?.size ?: 0}")
             if (locationList != null) {
-                searchingList!!.adapter = LocationListAdapter(locationList!!, activity!!, onClickListener) //{ println("${it.id}") }
+                searchingList!!.adapter = LocationListAdapter(locationList!!, activity!!, onClickListener)
                 searchingList?.adapter?.notifyDataSetChanged()
             }
         }

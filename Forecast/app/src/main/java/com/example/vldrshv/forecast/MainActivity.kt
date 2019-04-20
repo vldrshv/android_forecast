@@ -11,6 +11,7 @@ import android.location.LocationListener
 import androidx.core.app.ActivityCompat
 
 import android.Manifest
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -72,8 +73,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
     
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mBottomNavViewListener)
-        bottomNavigationView.selectedItemId = R.id.action_current_location
-        addFragment(CurrentLocationsF())
+
+
+        bottomNavigationView.selectedItemId = R.id.action_favourite_locations//R.id.action_current_location
+        //addFragment(CurrentLocationsF())
         fragmentState = Fragments.F_CURRENT_LOCATION
     }
 
@@ -133,7 +136,7 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 .putInt("id", currentLocation!!.id)
     }
     private fun saveDataToLocationDB() {
-        val locationDB: LocationDataSource = LocationDataSource(this);
+        val locationDB: LocationDataSource = LocationDataSource(this)
         locationDB.insert(currentLocation!!)
     }
 
@@ -209,8 +212,10 @@ class MainActivity : AppCompatActivity(), LocationListener {
                 saveDataToSharedPref() // save context
                 saveDataToLocationDB() // save to locationDB for faster accessing
                 // todo add location change broadcast
-                if (fragmentState == Fragments.F_CURRENT_LOCATION)
-                    addFragment(CurrentLocationsF())
+                sendBroadcast(Intent("location_updated"))
+                Log.i(CLASS_TAG, "SEND BROADCAST ::location_updated")
+//                if (fragmentState != Fragments.F_CURRENT_LOCATION)
+//                    addFragment(CurrentLocationsF())
             }
         }
     }

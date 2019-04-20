@@ -3,6 +3,18 @@ package com.example.vldrshv.forecast.adapters
 import android.content.Context
 import android.content.SharedPreferences
 
+/**
+ * SHARED PREFERENCES ADAPTER
+ *
+ * Used for easier accessing to Shared Preferences (location)
+ * --   uses keys (STRING)  to put context info
+ * --   return FLOAT, STRING values
+ *      **  INT value for LOCATION.ID
+ *      **  FLOAT value for LOCATION.LAT & LOCATION.LNG
+ *      **  STING value for LOCATION.NAME (localized or not)
+ *
+ * todo #1 update constructor to set SP_NAME
+ */
 class SharedPreferencesAdapter(context: Context) {
     private var sp: SharedPreferences? = null
     private var SP_NAME: String = "forecast_s_p"

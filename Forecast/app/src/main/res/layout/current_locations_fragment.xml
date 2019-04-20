@@ -25,6 +25,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/imageWeather"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,12 +47,13 @@
                     android:id="@+id/textViewTemperature"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/playfair_display"
                     android:tag="temperature_location"
                     android:text="-4°"
                     android:textColor="@color/colorMenuSelected"
                     android:textSize="60sp"
                     android:textStyle="bold" />
+                <!--android:fontFamily="@font/playfair_display"-->
+
 
                 <TextView
                     android:id="@+id/textViewCity"
@@ -157,12 +159,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" />
 
-            <com.jjoe64.graphview.helper.GraphViewXML
-                android:id="@+id/chartview"
+            <com.jjoe64.graphview.GraphView
                 android:layout_width="match_parent"
                 android:layout_height="200dip"
-                app:seriesData="0=5;1=5;2=0;3=2;4=1"
-                app:seriesType="line" />
+                android:id="@+id/chartview" />
 
             <Button
                 android:id="@+id/button"

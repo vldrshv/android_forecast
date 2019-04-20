@@ -53,7 +53,7 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
         const val DATABASE_NAME = "LocationDataSource.db"
     }
 
-    fun insert(location: Location){
+    fun insert(location: Location) {
         val db = this.writableDatabase
         val values = ContentValues().apply {
             put(LocationEntry.COLUMN_NAME_ID, location.id)
@@ -70,14 +70,25 @@ class LocationDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_
         db?.replace(LocationEntry.TABLE_NAME, null, values)
     }
 
-    fun selectAll(): ArrayList<Location> {
+    fun selectAll(isFavourite: Boolean = false, isSearched: Boolean = false): ArrayList<Location> {
         val db = this.readableDatabase
+        var selection: StringBuffer? = StringBuffer("")
+
+        if (isFavourite) {
+            selection!!.append("${LocationEntry.IS_FAVOURITE} = ?")
+        } else if (isSearched) {
+            selection!!.append("${LocationEntry.IS_SEARCHED} = ?")
+        }
+
+        if (selection!!.toString() == ""){
+            selection = null
+        }
 
         val cursor = db.query(
                 LocationEntry.TABLE_NAME,              // The table to query
                 null, //projection,           // The array of columns to return (pass null to get all)
-                null, //selection,            // The columns for the WHERE clause
-                null, //selectionArgs,     // The values for the WHERE clause
+                selection?.toString(),            // The columns for the WHERE clause
+                if (selection == null) null else arrayOf("1"),     // The values for the WHERE clause
                 null,                          // don't group the rows
                 null,                           // don't filter by row groups
                 null                           // The sort order

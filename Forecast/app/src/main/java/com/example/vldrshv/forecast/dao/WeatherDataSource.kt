@@ -99,7 +99,11 @@ class WeatherDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put(WeatherEntry.COLUMN_MAX_REAL_FEEL_TEMPERATURE_SHADE_UNIT, weather.realFeelTemperatureShade.maximum.unit)
             put(WeatherEntry.COLUMN_HOURS_OF_SUN, weather.hoursOfSun)
         }
-        db?.replace(WeatherEntry.TABLE_NAME, null, value)
+        val list: List<Weather> = select(cityId)
+        if (!list.isEmpty())
+            db?.delete(WeatherEntry.TABLE_NAME, null, null)
+
+        db?.insert(WeatherEntry.TABLE_NAME, null, value)
     }
 
     fun select(cityId: Int): List<Weather> {
@@ -120,8 +124,8 @@ class WeatherDataSource(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 weather.date = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_DATE))
                 weather.sun.riseTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_SUN_RISE_TIME))
                 weather.sun.setTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_SUN_SET_TIME))
-                weather.moon.riseTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_MOON_RISE_TIME))
-                weather.moon.setTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_MOON_SET_TIME))
+                weather.moon.riseTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_MOON_RISE_TIME)) ?: ""
+                weather.moon.setTime = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_MOON_SET_TIME)) ?: ""
                 weather.temperature.minimum.value = getFloat(getColumnIndexOrThrow(WeatherEntry.COLUMN_MIN_TEMPERATURE))
                 weather.temperature.minimum.unit = getString(getColumnIndexOrThrow(WeatherEntry.COLUMN_MIN_TEMPERATURE_UNIT))
                 weather.temperature.maximum.value = getFloat(getColumnIndexOrThrow(WeatherEntry.COLUMN_MAX_TEMPERATURE))
